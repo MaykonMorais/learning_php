@@ -5,11 +5,14 @@ namespace Source\Models;
 
 /*
  * Stateless -> As propriedades não irão implementar as regras de negócio, e sim, rotinas
- * Statefull ->
  * */
 
 use Source\Database\Connect;
 
+/**
+ * Class Model
+ * @package Source\Models
+ */
 abstract class Model
 {
     /** @var object|null */
@@ -21,6 +24,10 @@ abstract class Model
     /** @var string|null  */
     protected $message;
 
+    /**
+     * @param string $name
+     * @param $value
+     */
     public function __set(string $name, $value): void
     {
         if(empty($this->data)) {
@@ -31,11 +38,19 @@ abstract class Model
         $this->data->$name =$value;
     }
 
+    /**
+     * @param string $name
+     * @return bool
+     */
     public function __isset(string $name): bool
     {
        return isset($this->data->$name);
     }
 
+    /**
+     * @param string $name
+     * @return null
+     */
     public function __get(string $name)
     {
         return $this->data->$name ?? null;
@@ -65,6 +80,11 @@ abstract class Model
         return $this->message;
     }
 
+    /**
+     * @param string $entity
+     * @param array $data
+     * @return int|null
+     */
     protected function create(string $entity, array $data) : ?int
     {
        try {
@@ -82,6 +102,11 @@ abstract class Model
        }
     }
 
+    /**
+     * @param string $select
+     * @param string|null $params
+     * @return \PDOStatement|null
+     */
     protected function read(string $select, string $params = null) : ?\PDOStatement
     {
          try {
@@ -107,15 +132,60 @@ abstract class Model
          }
     }
 
-    protected function update() {
+    /**
+     *
+     */
+    protected function update(string $entity, array $data, string $terms, string $params) {
+        try {
+            $dataSet = [];
 
+            foreach ($data as $key => $value) {
+                $dataSet[] =  "{$key} = :{$key}";
+            }
+
+            $dataSet = implode(', ', $dataSet);
+            parse_str($params, $params);
+
+            $stmt = Connect::getInstace()->prepare("UPDATE {$entity} SET {$dataSet} WHERE {$terms}");
+
+            $stmt->execute($this->filter(array_merge($data, $params)));
+
+            return $stmt->rowCount() ??  1;
+
+        } catch(\PDOException $exception) {
+            $this->fail = $exception;
+
+            return null;
+        }
     }
 
-    protected function delete() {
+    /**
+     * @param string $entity
+     * @param string $terms
+     * @param string $params
+     * @return int|null
+     */
+    protected function delete(string $entity, string $terms, string $params) : ?int
+    {
+        try {
+            $stmt = Connect::getInstace()->prepare("DELETE FROM {$entity} WHERE {$terms}");
+            parse_str($params, $params);
 
+            $stmt->execute($params);
+
+            return ($stmt->rowCount() ?? 1);
+
+        } catch (\PDOException $exception) {
+            $this->fail = $exception;
+            return null;
+        }
     }
 
     // retira propriedades que são geradas automaticamente (id, created_at, updated_at)
+
+    /**
+     * @return array|null
+     */
     protected  function safe() :?array
     {
         $safe = (array)$this->data;
@@ -131,6 +201,10 @@ abstract class Model
     /*
      * Realiza filtro dos dados passados ($data)
      * */
+    /**
+     * @param array $data
+     * @return array|null
+     */
     protected function filter(array $data) : ?array
     {
         $filter = [];

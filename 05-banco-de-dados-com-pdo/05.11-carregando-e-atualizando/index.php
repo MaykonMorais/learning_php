@@ -9,4 +9,19 @@ require __DIR__ . "/../source/autoload.php";
  */
 fullStackPHPClassSession("save update", __LINE__);
 
+$model = new \Source\Models\UserModel();
+$user = $model->load(1);
+
+if($user) {
+    $user->first_name = "Maria";
+    $user->email = "maria@gmail.com";
+
+    $user->save();
+
+    //var_dump($user);
+
+}
+else {
+    echo "<p class='trigger error'>User not found</p>";
+}
 

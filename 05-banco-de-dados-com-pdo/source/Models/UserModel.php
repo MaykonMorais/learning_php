@@ -5,6 +5,10 @@ namespace Source\Models;
 
 use Source\App\User;
 
+/**
+ * Class UserModel
+ * @package Source\Models
+ */
 class UserModel extends Model
 {
     /** @var array no update or create */
@@ -14,6 +18,13 @@ class UserModel extends Model
     protected static $entity = "users";
 
 
+    /**
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $email
+     * @param string|null $document
+     * @return $this|null
+     */
     public function  bootstrap(string $firstName, string $lastName, string $email, string $document = null) :?UserModel
     {
         $this->first_name = $firstName;
@@ -24,6 +35,11 @@ class UserModel extends Model
         return $this;
     }
 
+    /**
+     * @param int $id
+     * @param string $columns
+     * @return UserModel|null
+     */
     public function load(int $id, string $columns = "*") : ?UserModel
     {
         $load = $this->read("SELECT {$columns} FROM ".self::$entity." WHERE id = :id", "id={$id}");
@@ -36,6 +52,11 @@ class UserModel extends Model
         return $load->fetchObject(__CLASS__);
     }
 
+    /**
+     * @param $email
+     * @param string $columns
+     * @return UserModel|null
+     */
     public function find($email, string $columns = "*") : ?UserModel
     {
         $find = $this->read("SELECT {$columns} FROM ".self::$entity." WHERE email = :email", "email={$email}");
@@ -49,6 +70,12 @@ class UserModel extends Model
         return $find->fetchObject(__CLASS__);
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @param string $columns
+     * @return array|null
+     */
     public function all(int $limit = 30, int $offset = 0, string $columns = "*") : ?array
     {
         $all = $this->read("SELECT {$columns} FROM " .self::$entity." LIMIT :l OFFSET :o", "l={$limit}&o={$offset}");
@@ -62,6 +89,9 @@ class UserModel extends Model
         return $all->fetchAll(\PDO::FETCH_CLASS, __CLASS__);
     }
 
+    /**
+     * @return $this|null
+     */
     public function save() : ?UserModel
     {
 
@@ -71,7 +101,27 @@ class UserModel extends Model
 
         /* User Update */
         if(!empty($this->id)) {
-            $userId = $this->id;
+            $emailValidation =
+                $this->read(
+                    "SELECT id FROM users where email = :email and id = :id",
+                    "email={$this->email}&id={$this->id}"
+                );
+
+            if($emailValidation->rowCount()) {
+                $this->message =  "Email belongs to another account";
+                return null;
+            }
+
+            $this->update(self::$entity, $this->safe(), "id = :id", "id={$this->id}");
+
+            if($this->fail()) {
+                $this->message = "Ops! An error has ocurred";
+            }
+
+            $this->message = "Sucessfully updated";
+            $this->data = $this->read("SELECT * FROM users WHERE id = :id", "id={$this->id}")->fetch();
+
+            return $this;
         }
 
         /* User Create */
@@ -95,10 +145,29 @@ class UserModel extends Model
         return $this;
     }
 
-    public function destroy() {
+    /**
+     * @return $this|null
+     */
+    public function destroy() : ?UserModel
+    {
+        if(!empty($this->id)) {
+            $this->delete(self::$entity, "id = :id", "id={$this->id}");
+        }
 
+        if($this->fail()) {
+            $this->message = "it was not possible remove user";
+            return null;
+        }
+
+        $this->message = "User removed";
+        $this->data  = null;
+
+        return $this;
     }
 
+    /**
+     * @return bool
+     */
     private function required() : bool
     {
         if(empty($this->first_name) || empty($this->last_name) || empty($this->last_name) || empty($this->email)) {
