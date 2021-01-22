@@ -11,7 +11,7 @@ class User
     private $email;
 
     /**
-     * UserModel constructor.
+     * User constructor.
      * @param $firstName
      * @param $lastName
      */

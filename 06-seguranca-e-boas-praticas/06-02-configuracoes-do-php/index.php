@@ -33,7 +33,7 @@ var_dump([
 fullStackPHPClassSession("memory and time", __LINE__);
 
 var_dump([
-    "memory_get_peak_usage" => $mem = memory_get_peak_usage(),
+    "memory_get_peak_usage" => $mem = memory_get_peak_usage(), // pico de utilização da memória
     "memory_get_peak_usage | M" => number_format($mem / (1024 * 1024), 2) . "M",
 ], [
     "memory_limit" => ini_get("memory_limit"),
@@ -67,6 +67,8 @@ var_dump([
 /*
  * [ output_buffering ] Limita a quantidade de requisições melhorando a performance da
  * aplicação ao empurrar todos os comandos de saída para o final da requisição.
+ *
+ * O PHP vai criar um cache com todos os outputs e irá enviar o conteúdo somente no final
  *
  * [ implicit_flush ] Em off para empurrar o buffering para o final da saída. Em on
  * para descarregar a cada echo, print, etc.

@@ -110,7 +110,7 @@ class PHPMailer
      *
      * @var string
      */
-    public $FromName = 'Root UserModel';
+    public $FromName = 'Root User';
 
     /**
      * The envelope sender of the message.
@@ -2201,7 +2201,7 @@ class PHPMailer
      * @param array  $addr An array of recipients,
      *                     where each recipient is a 2-element indexed array with element 0 containing an address
      *                     and element 1 containing a name, like:
-     *                     [['joe@example.com', 'Joe UserModel'], ['zoe@example.com', 'Zoe UserModel']]
+     *                     [['joe@example.com', 'Joe User'], ['zoe@example.com', 'Zoe User']]
      *
      * @return string
      */
@@ -2219,7 +2219,7 @@ class PHPMailer
      * Format an address for use in a message header.
      *
      * @param array $addr A 2-element indexed array, element 0 containing an address, element 1 containing a name like
-     *                    ['joe@example.com', 'Joe UserModel']
+     *                    ['joe@example.com', 'Joe User']
      *
      * @return string
      */

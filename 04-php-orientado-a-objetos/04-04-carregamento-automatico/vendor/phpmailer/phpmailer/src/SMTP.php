@@ -542,7 +542,7 @@ class SMTP
                 // Send encoded username and password
                 if (
                     !$this->sendCommand(
-                        'UserModel & Password',
+                        'User & Password',
                         base64_encode("\0" . $username . "\0" . $password),
                         235
                     )
@@ -1090,7 +1090,7 @@ class SMTP
         //it can leak credentials, so hide credentials in all but lowest level
         if (
             self::DEBUG_LOWLEVEL > $this->do_debug &&
-            in_array($command, ['UserModel & Password', 'Username', 'Password'], true)
+            in_array($command, ['User & Password', 'Username', 'Password'], true)
         ) {
             $this->edebug('CLIENT -> SERVER: [credentials hidden]', self::DEBUG_CLIENT);
         } else {

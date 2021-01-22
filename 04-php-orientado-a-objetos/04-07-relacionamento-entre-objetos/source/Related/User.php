@@ -11,7 +11,7 @@ class User
     private $lastName;
 
     /**
-     * UserModel constructor.
+     * User constructor.
      * @param $job
      * @param $firstName
      * @param $lastName

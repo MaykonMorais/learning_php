@@ -5,7 +5,7 @@ fullStackPHPClassName("05.08 - Regra de negócio e modelo");
 require __DIR__ . "/../source/autoload.php";
 
 use Source\Models\Model;
-use Source\Models\UserModel;
+use Source\Models\User;
 /*
  * [ layer ] Uma classe base que implementa os métodos de persitência e serve a todos os modelos.
  * essa é uma layer supertype.
@@ -27,6 +27,6 @@ var_dump(
  */
 fullStackPHPClassSession("model", __LINE__);
 
-$model = new UserModel();
+$model = new User();
 
 var_dump($model, get_class_methods($model)) ;

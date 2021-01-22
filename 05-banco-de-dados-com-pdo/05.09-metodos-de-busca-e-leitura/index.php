@@ -9,7 +9,7 @@ require __DIR__ . "/../source/autoload.php";
  */
 fullStackPHPClassSession("load", __LINE__);
 
-$model = new \Source\Models\UserModel();
+$model = new \Source\Models\User();
 
 $user = $model->load(1);
 

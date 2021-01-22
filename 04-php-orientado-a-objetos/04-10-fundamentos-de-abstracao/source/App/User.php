@@ -10,7 +10,7 @@ class User
     private $lastName;
 
     /**
-     * UserModel constructor.
+     * User constructor.
      * @param $firstName
      * @param $lastName
      */

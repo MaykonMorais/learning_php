@@ -13,7 +13,7 @@ class User
     private $error;
 
     /**
-     * UserModel constructor.
+     * User constructor.
      * @param $firstName
      * @param $lastName
      * @param $email

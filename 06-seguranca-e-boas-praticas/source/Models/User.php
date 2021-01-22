@@ -3,13 +3,13 @@
 
 namespace Source\Models;
 
-use Source\App\User;
+use Source\Core\Model;
 
 /**
  * Class User
  * @package Source\Models
  */
-class UserModel extends Model
+class User extends Model
 {
     /** @var array no update or create */
     protected static $safe = ["id", "created_at", "updated_at"];
