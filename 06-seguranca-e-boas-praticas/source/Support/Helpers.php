@@ -1,5 +1,28 @@
 <?php
 
+use Source\Core\Message;
+use Source\Core\Session;
+
+/**
+ * Validar email
+ * @param string $email
+ * @return bool
+ */
+function is_email(string $email) : bool
+{
+  return filter_var($email, FILTER_VALIDATE_EMAIL);
+}
+
+/**
+ * Validar senha do usuário (somente tamanho)
+ * @param string $password
+ * @return bool
+ */
+function is_passwd(string $password) : bool
+{
+  return (mb_strlen($password) >= CONF_PASSWD_MIN_LEN && mb_strlen($password) <= CONF_PASSWD_MAX_LEN);
+}
+
 
 /**
  * Transformar uma string em uma URL ou URI  (Helper Slug)
@@ -101,3 +124,68 @@ function str_limit_chars(string $string, int $limit, string $pointer = '...') : 
 
   return "{$chars}{$pointer}";
 }
+
+/**
+ * Definição da url
+ * @param string $url
+ * @return string
+ */
+function url(string $path) : string
+{
+  return CONF_URL_BASE."/".($path[0] == "/" ? mb_substr($path, 1) : $path);
+}
+
+/**
+ * Redirecionamento da página
+ * @param string $url
+ */
+function redirect(string $url) : void
+{
+  header("HTTP/1.1 302 Redirect"); 
+  if(filter_var($url, FILTER_VALIDATE_URL)) 
+  {
+    header("Location:  {$url}");
+    exit;
+  }
+
+  $location = url($url);
+  header("Location:  {$location}");
+
+  exit;
+}
+
+// CORE TRIGGERS
+ 
+/**
+ * Retornar uma instância pronta para uso do banco de dados
+ * @return PDO
+ */
+function db() : PDO
+{
+  return \Source\Core\Connect::getInstace();
+}
+
+/**
+ * @return Message
+ */
+function message() : Message
+{
+  return new Message();
+}
+
+/**
+ * @return Session
+ */
+function session() : Session 
+{
+  return new Session();
+}
+
+/**
+ * @return \Source\Models\User
+ */
+function user() : \Source\Models\User
+{
+  return new \Source\Models\User();
+}
+
