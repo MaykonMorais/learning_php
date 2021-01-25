@@ -35,7 +35,11 @@ function str_studly_case(string $string) : string
   return $studlyCase;
 }
 
-
+/**
+ * Converte para camel case a string url
+ * @param string $string
+ * @return string
+ */
 function str_camel_case(string $string) : string 
 {
   $camelCase = lcfirst(str_studly_case($string));
@@ -43,3 +47,57 @@ function str_camel_case(string $string) : string
   return $camelCase;
 };
 
+/**
+ * Converte a string para o formato title sendo tratada
+ * @param string $string
+ * @return string
+ */
+function str_title(string $string) : string 
+{
+  $string = filter_var($string, FILTER_SANITIZE_SPECIAL_CHARS);
+  return mb_convert_case($string, MB_CASE_TITLE);
+};
+
+
+/**
+ * Quantidade limite de palavras
+ * @param string $string
+ * @param int $limit
+ * @param string $pointer
+ * @return string
+ */
+function str_limit_words(string $string, int $limit, string $pointer = '...') : string
+{
+  $string = trim(filter_var($string, FILTER_SANITIZE_SPECIAL_CHARS));
+  $arrWords = explode(" ", $string);
+  $numWords = count($arrWords);
+
+  if($numWords < $limit) {
+    return $string;
+  }
+
+  $words = implode(" ", array_slice($arrWords, 0, $limit));
+
+  return "{$words}{$pointer}";
+}
+
+
+/**
+ * Quantidade limite de caracteres
+ * @param string $string
+ * @param int $limit
+ * @param string $pointer
+ * @return string
+ */
+function str_limit_chars(string $string, int $limit, string $pointer = '...') : string
+{
+  $string = trim(filter_var($string, FILTER_SANITIZE_SPECIAL_CHARS));
+
+  if(mb_strlen($string) <= $limit) {
+    return $string;
+  }
+
+  $chars = mb_substr($string, 0 ,mb_strrpos(mb_substr($string, 0, $limit), " "));
+
+  return "{$chars}{$pointer}";
+}
