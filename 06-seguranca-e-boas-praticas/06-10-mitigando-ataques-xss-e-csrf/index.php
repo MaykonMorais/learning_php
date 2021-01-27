@@ -8,7 +8,17 @@ require __DIR__ . "/../source/autoload.php";
  * [ XSS ] Cross-site Scripting
  * https://pt.wikipedia.org/wiki/Cross-site_scripting
  */
-fullStackPHPClassSession("xxs", __LINE__);
+fullStackPHPClassSession("xss", __LINE__);
+
+//$post = $_POST;
+$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRIPPED);
+
+if($post) {
+  $data = (object)$post;
+  var_dump($post);
+
+  echo $data->first_name;
+}
 
 
 /*
@@ -16,6 +26,14 @@ fullStackPHPClassSession("xxs", __LINE__);
  * https://pt.wikipedia.org/wiki/Cross-site_request_forgery
  */
 fullStackPHPClassSession("csrf", __LINE__);
+
+if($_REQUEST && !csrf_verify($_REQUEST)) {
+  echo "<p>CSRF BLOCKED</p>";
+} else {
+  var_dump($_REQUEST);
+}
+
+var_dump($_REQUEST);
 
 
 /*
