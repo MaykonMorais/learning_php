@@ -131,10 +131,8 @@ abstract class Model
          }
     }
 
-    /**
-     *
-     */
     protected function update(string $entity, array $data, string $terms, string $params) {
+        
         try {
             $dataSet = [];
 
@@ -142,13 +140,13 @@ abstract class Model
                 $dataSet[] =  "{$key} = :{$key}";
             }
 
-            $dataSet = implode(', ', $dataSet);
+            $dataSet = implode(", ", $dataSet);
             parse_str($params, $params);
 
             $stmt = Connect::getInstace()->prepare("UPDATE {$entity} SET {$dataSet} WHERE {$terms}");
-
+            
             $stmt->execute($this->filter(array_merge($data, $params)));
-
+            
             return $stmt->rowCount() ??  1;
 
         } catch(\PDOException $exception) {
@@ -179,13 +177,12 @@ abstract class Model
             return null;
         }
     }
-
-    // retira propriedades que são geradas automaticamente (id, created_at, updated_at)
-
+    
     /**
+     * Retira propriedades que são geradas automaticamente (id, created_at, updated_at)
      * @return array|null
      */
-    protected  function safe() :?array
+    protected function safe() :?array
     {
         $safe = (array)$this->data;
 
@@ -197,10 +194,8 @@ abstract class Model
         return $safe;
     }
 
-    /*
-     * Realiza filtro dos dados passados ($data)
-     * */
     /**
+     * Realiza filtro dos dados passados ($data)
      * @param array $data
      * @return array|null
      */

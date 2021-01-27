@@ -189,3 +189,37 @@ function user() : \Source\Models\User
   return new \Source\Models\User();
 }
 
+
+// PASSWORD HANDLES
+
+/**
+ * Geração de senha encapsulada
+ * @param string $password
+ * @return string
+ */
+function passwd(string $password) : string
+{
+  return password_hash($password, CONF_PASSWD_ALGO, CONF_PASSWD_OPTION);
+}
+
+/**
+ * Verificação de Senha
+ * @param string $password
+ * @param string $hash
+ * @return bool
+ */
+function passwd_verify(string $password, string $hash) : bool
+{
+  return password_verify($password, $hash);
+}
+
+
+/**
+ * Verificação para necesidade de gerar novo hash
+ * @param string $hash
+ * @return bool
+ */
+function passwd_rehash(string $hash) : bool 
+{
+  return password_needs_rehash($hash, CONF_PASSWD_ALGO, CONF_PASSWD_OPTION); 
+}

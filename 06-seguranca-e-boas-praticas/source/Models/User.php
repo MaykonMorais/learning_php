@@ -103,8 +103,7 @@ class User extends Model
         if(!empty($this->id)) {
             $emailValidation =
                 $this->read(
-                    "SELECT id FROM users where email = :email and id = :id",
-                    "email={$this->email}&id={$this->id}"
+                    "SELECT id FROM users WHERE email = :email and id != :id", "email={$this->email}&id={$this->id}"
                 );
 
             if($emailValidation->rowCount()) {

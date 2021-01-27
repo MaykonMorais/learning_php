@@ -14,7 +14,7 @@ define("CONF_DB_PORT", "3306");
  * PROJECT URLs
  * */
 
-define("CONF_URL_BASE", "http://localhost/fsphp/06-seguranca-e-boas-praticas/06-08-camada-de-manipulacao-pt3");
+define("CONF_URL_BASE", "http://localhost/fsphp/06-seguranca-e-boas-pra ticas/06-08-camada-de-manipulacao-pt3");
 define("CONF_URL_ADMIN", CONF_URL_BASE."/admin");
 define("CONF_URL_ERROR", CONF_URL_BASE."/404");
 
@@ -47,3 +47,6 @@ define("CONF_MESSAGE_ERROR", "error");
 
 define("CONF_PASSWD_MIN_LEN", 8);
 define("CONF_PASSWD_MAX_LEN", 40);
+define("CONF_PASSWD_ALGO", PASSWORD_DEFAULT);
+define("CONF_PASSWD_OPTION", ["cost" => 10]);
+
