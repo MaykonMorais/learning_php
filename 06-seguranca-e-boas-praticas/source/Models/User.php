@@ -17,6 +17,9 @@ class User extends Model
     /** @var string $entity database table */
     protected static $entity = "users";
 
+    /** @var array $required table fields */
+    protected static $required  = ["first_name", "last_name", "email","password"];
+
 
     /**
      * @param string $firstName
@@ -25,14 +28,32 @@ class User extends Model
      * @param string|null $document
      * @return $this|null
      */
-    public function  bootstrap(string $firstName, string $lastName, string $email, string $document = null) :?User
+    public function  bootstrap(string $firstName, string $lastName, string $email,string $password,string $document = null) :?User
     {
         $this->first_name = $firstName;
         $this->last_name = $lastName;
         $this->email = $email;
+        $this->password = $password;
         $this->document = $document;
 
         return $this;
+    }
+
+    /**
+     * @param string $terms
+     * @param string $params
+     * @param string $columns
+     * @return User|null
+     */
+    public function find(string $terms, string $params, string $columns = "*") : ?User
+    {
+        $find = $this->read("SELECT {$columns} FROM ". self::$entity. " WHERE {$terms}", $params);
+
+        if($this->fail() || !$find->rowCount()) 
+        {
+            return null;
+        }
+        return $find->fetchObject(__CLASS__);
     }
 
     /**
@@ -40,16 +61,9 @@ class User extends Model
      * @param string $columns
      * @return User|null
      */
-    public function load(int $id, string $columns = "*") : ?User
+    public function findById(int $id, string $columns = "*") : ?User
     {
-        $load = $this->read("SELECT {$columns} FROM ".self::$entity." WHERE id = :id", "id={$id}");
-
-        if($this->fail() || !$load->rowCount()) {
-            $this->message = "User not found by id";
-
-            return null;
-        }
-        return $load->fetchObject(__CLASS__);
+       return $this->find("id = :id", "id={$id}", $columns);
     }
 
     /**
@@ -57,17 +71,9 @@ class User extends Model
      * @param string $columns
      * @return User|null
      */
-    public function find($email, string $columns = "*") : ?User
+    public function findByEmail($email, string $columns = "*") : ?User
     {
-        $find = $this->read("SELECT {$columns} FROM ".self::$entity." WHERE email = :email", "email={$email}");
-
-        if($this->fail() | !$find->rowCount()) {
-            $this->message = "User not found by email";
-
-            return null;
-        }
-
-        return $find->fetchObject(__CLASS__);
+        return $this->find("email = :email", "email={$email}", $columns);
     }
 
     /**
@@ -81,8 +87,6 @@ class User extends Model
         $all = $this->read("SELECT {$columns} FROM " .self::$entity." LIMIT :l OFFSET :o", "l={$limit}&o={$offset}");
 
         if($this->fail() || !$all->rowCount()) {
-            $this->message = "Consult returned nothing";
-
             return null;
         }
 
@@ -96,51 +100,47 @@ class User extends Model
     {
 
         if(!$this->required()) {
+            $this->message()->warning("Nome, sobrenome, email e senha são obrigatórios");
             return null;
         }
 
         /* User Update */
         if(!empty($this->id)) {
-            $emailValidation =
-                $this->read(
-                    "SELECT id FROM users WHERE email = :email and id != :id", "email={$this->email}&id={$this->id}"
-                );
-
-            if($emailValidation->rowCount()) {
-                $this->message =  "Email belongs to another account";
+            $userId = $this->id;
+            
+            if($this->find("email = :e AND id != :i", "e={$this->email}&i={$userId}")) {
+                $this->message()->warning("Email informado já está cadastrado");
                 return null;
             }
 
-            $this->update(self::$entity, $this->safe(), "id = :id", "id={$this->id}");
+            $this->update(self::$entity, $this->safe(), "id = :id", "id={$userId}");
 
             if($this->fail()) {
-                $this->message = "Ops! An error has ocurred";
+                $this->message()->warning("Error ao atualizar, verifique seus dados!");
+                return null;
             }
-
-            $this->message = "Sucessfully updated";
-            $this->data = $this->read("SELECT * FROM users WHERE id = :id", "id={$this->id}")->fetch();
-
-            return $this;
-        }
+         }
 
         /* User Create */
         if(empty($this->id)) {
-            if($this->find($this->email)) {
-                $this->message = "email has been used";
-
+            if($this->findByEmail($this->email)) 
+            {
+                $this->message()->warning("Email já está cadastrado!");
                 return null;
             }
 
             $userId = $this->create(self::$entity, $this->safe());
+            
+            // echo "Id " , $userId;
 
             if($this->fail()) {
-                $this->message = "Ops! Error during register. Verify your data";
+                $this->message()->warning("Erro ao cadastrar, verifique seus dados!");
             }
 
             $this->message = "Success! Register Accepted";
         }
 
-        $this->data = $this->read("SELECT * FROM users WHERE id = :id", "id={$userId}")->fetch();
+        $this->data = ($this->findById($userId))->data();
         return $this;
     }
 
@@ -162,24 +162,5 @@ class User extends Model
         $this->data  = null;
 
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    private function required() : bool
-    {
-        if(empty($this->first_name) || empty($this->last_name) || empty($this->last_name) || empty($this->email)) {
-            $this->message = "First name, last name and email are required";
-
-            return false;
-        }
-
-        if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            $this->message = "Invalid email";
-            return false;
-        }
-
-        return true;
     }
 }

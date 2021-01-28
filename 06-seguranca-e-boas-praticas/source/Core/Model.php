@@ -20,8 +20,16 @@ abstract class Model
     /** @var \PDOException|null */
     protected $fail;
 
-    /** @var string|null  */
+    /** @var Message|null  */
     protected $message;
+
+    /**
+     * Model constructor
+     */
+    public function __construct()
+    {
+        $this->message = new Message();
+    }
 
     /**
      * @param string $name
@@ -72,9 +80,9 @@ abstract class Model
     }
 
     /**
-     * @return string|null
+     * @return Message|null
      */
-    public function message(): ?string
+    public function message(): ?Message
     {
         return $this->message;
     }
@@ -91,9 +99,11 @@ abstract class Model
             $values = ":".implode(", :", array_keys($data));
 
             $stmt = Connect::getInstace()->prepare("INSERT INTO {$entity} ({$columns}) VALUES ({$values})");
+            
+            echo "<p>INSERT INTO {$entity} ({$columns}) VALUES ({$values})</p>";
 
             $stmt->execute($this->filter($data));
-
+            
             return Connect::getInstace()->lastInsertId();
        } catch (\PDOException $exception) {
            $this->fail =  $exception;
@@ -110,7 +120,7 @@ abstract class Model
     {
          try {
             $stmt = Connect::getInstace()->prepare($select);
-
+            
             if($params) {
                 parse_str($params, $params); // tranform to array the params
 
@@ -202,11 +212,26 @@ abstract class Model
     protected function filter(array $data) : ?array
     {
         $filter = [];
-
+      
         foreach ($data as $key => $value) {
-            $filter[$key] = (is_numeric($value) ? null : filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS));
+            $x = filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS);
+            $filter[$key] = (is_null($value) ? null : $x);            
         }
 
         return $filter;
+    }
+
+
+    protected function required() : bool
+    {
+        $data = (array)$this->data();
+        
+        foreach(static::$required as $field) {
+            if(empty($data[$field])) {
+               return false; 
+            }
+        }
+
+        return true;
     }
 }
