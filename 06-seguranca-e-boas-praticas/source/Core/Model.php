@@ -84,7 +84,8 @@ abstract class Model
      */
     public function message(): ?Message
     {
-        return $this->message;
+        //var_dump($this->message);
+        return  $this->message;
     }
 
     /**
@@ -100,8 +101,6 @@ abstract class Model
 
             $stmt = Connect::getInstace()->prepare("INSERT INTO {$entity} ({$columns}) VALUES ({$values})");
             
-            echo "<p>INSERT INTO {$entity} ({$columns}) VALUES ({$values})</p>";
-
             $stmt->execute($this->filter($data));
             
             return Connect::getInstace()->lastInsertId();

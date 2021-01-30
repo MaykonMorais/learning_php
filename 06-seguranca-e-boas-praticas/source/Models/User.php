@@ -98,10 +98,25 @@ class User extends Model
      */
     public function save() : ?User
     {
-
+       
         if(!$this->required()) {
             $this->message()->warning("Nome, sobrenome, email e senha são obrigatórios");
             return null;
+        }
+
+        if(!is_email($this->email)) {
+            $this->message("Formato inválido de email");
+            return null;
+        }
+
+        if(!is_passwd($this->password)) {
+            $min = CONF_PASSWD_MIN_LEN;
+            $max = CONF_PASSWD_MAX_LEN;
+
+            $this->message()->warning("A senha deve ter entre {$min} e {$max} caracteres");
+            return null;
+        } else {
+            $this->password = passwd($this->password);
         }
 
         /* User Update */
@@ -121,8 +136,11 @@ class User extends Model
             }
          }
 
+         echo "<p>Opa</p>";
+
         /* User Create */
         if(empty($this->id)) {
+
             if($this->findByEmail($this->email)) 
             {
                 $this->message()->warning("Email já está cadastrado!");
@@ -136,8 +154,6 @@ class User extends Model
             if($this->fail()) {
                 $this->message()->warning("Erro ao cadastrar, verifique seus dados!");
             }
-
-            $this->message = "Success! Register Accepted";
         }
 
         $this->data = ($this->findById($userId))->data();
@@ -154,11 +170,10 @@ class User extends Model
         }
 
         if($this->fail()) {
-            $this->message = "it was not possible remove user";
+            message()->error("Erro ao remover usuário");
             return null;
         }
 
-        $this->message = "User removed";
         $this->data  = null;
 
         return $this;
