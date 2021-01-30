@@ -84,7 +84,7 @@ class User extends Model
      */
     public function all(int $limit = 30, int $offset = 0, string $columns = "*") : ?array
     {
-        $all = $this->read("SELECT {$columns} FROM " .self::$entity." LIMIT :l OFFSET :o", "l={$limit}&o={$offset}");
+        $all = $this->read("SELECT {$columns} FROM " .self::$entity." LIMIT :limit OFFSET :offset", "limit={$limit}&offset={$offset}");
 
         if($this->fail() || !$all->rowCount()) {
             return null;

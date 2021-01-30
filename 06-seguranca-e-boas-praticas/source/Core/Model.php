@@ -124,8 +124,12 @@ abstract class Model
                 parse_str($params, $params); // tranform to array the params
 
                 foreach ($params as $key => $value) {
-                    $type = (is_numeric($value) ? \PDO::PARAM_INT : \PDO::PARAM_STR);
-                    $stmt->bindValue(":{$key}", $value, $type);
+                    if($key == 'limit' || $key == 'offset') {
+                        $stmt->bindValue(":{$key}", $value, \PDO::PARAM_INT);
+                    }
+                    else {
+                        $stmt->bindValue(":{$key}", $value, \PDO::PARAM_STR);
+                    }
                 }
             }
 
