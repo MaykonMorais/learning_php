@@ -2,10 +2,12 @@
 /**
  * DATABASE
  */
-define("CONF_DB_HOST", "localhost");
-define("CONF_DB_USER", "root");
-define("CONF_DB_PASS", "");
+define("CONF_DB_HOST", "127.0.0.1");
+define("CONF_DB_USER", "admin");
+define("CONF_DB_PASS", "1234");
 define("CONF_DB_NAME", "fullstackphp");
+define("CONF_DB_PORT", "3306");
+
 
 /**
  * PROJECT URLs
