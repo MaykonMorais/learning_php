@@ -1,0 +1,25 @@
+{
+  "name": "maykonmorais/fsphp",
+  "description": "Formação Fullstack PHP Developer",
+  "minimum-stability": "stable",
+  "authors": [
+    {
+    "name": "Maykon Morais",
+    "email": "maykons501@gmail.com",
+    "role": "Maykon Morais"
+    }
+  ],
+  "config": {
+    "vendor-dir": "vendor"
+  },
+  "autoload": {
+    "psr-4": {
+      "Source\\": "source/"
+    },
+    "files": [
+      "source/Support/Config.php",
+      "source/Support/Helpers.php"
+    ]
+  },
+  "require": {}
+}

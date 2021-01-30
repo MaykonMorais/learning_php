@@ -2,7 +2,7 @@
 require __DIR__ . '/../../fullstackphp/fsphp.php';
 fullStackPHPClassName("07.02 - Suas compras no packagist");
 
-require __DIR__ . "/../source/autoload.php";
+require __DIR__ . "/../vendor/autoload.php";
 
 /*
  * [ guide ] https://packagist.org/
