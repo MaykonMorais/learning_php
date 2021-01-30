@@ -136,8 +136,6 @@ class User extends Model
             }
          }
 
-         echo "<p>Opa</p>";
-
         /* User Create */
         if(empty($this->id)) {
 
