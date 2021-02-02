@@ -1,7 +1,18 @@
 <?php
+
+require __DIR__."/../../vendor/vlucas/phpdotenv/src/Dotenv.php";
+
+use Dotenv\Dotenv;
+
+$envs = Dotenv::createImmutable(__DIR__."/../..");
+$envs->load();
+
 /**
  * DATABASE
  */
+
+
+
 define("CONF_DB_HOST", "127.0.0.1");
 define("CONF_DB_USER", "admin");
 define("CONF_DB_PASS", "1234");
@@ -43,3 +54,20 @@ define("CONF_MESSAGE_INFO", "info");
 define("CONF_MESSAGE_SUCCESS", "success");
 define("CONF_MESSAGE_WARNING", "warning");
 define("CONF_MESSAGE_ERROR", "error");
+
+/** MAIL */
+
+define("CONF_MAIL_HOST", $_ENV['MAIL_HOST']);
+define("CONF_MAIL_PORT", $_ENV['MAIL_PORT']);
+define("CONF_MAIL_USER", $_ENV['MAIL_USERNAME']);
+define("CONF_MAIL_PASS", $_ENV['MAIL_PASSWORD']);
+define("CONF_MAIL_SENDER", ["name" => "Maykon Morais", "address" => "maykons501@gmail.com"]);
+
+
+/** MAIL OPTIONS */
+
+define("CONF_MAIL_OPTIONS_LANG", "br");
+define("CONF_MAIL_OPTIONS_HTML", true);
+define("CONF_MAIL_OPTIONS_AUTH", true);
+define("CONF_MAIL_OPTIONS_SECURE", $_ENV['MAIL_ENCRYPTION']);
+define("CONF_MAIL_OPTIONS_CHARSET", "utf-8");
