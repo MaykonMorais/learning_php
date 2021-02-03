@@ -55,6 +55,11 @@ define("CONF_MESSAGE_SUCCESS", "success");
 define("CONF_MESSAGE_WARNING", "warning");
 define("CONF_MESSAGE_ERROR", "error");
 
+/** VIEW */
+define("CONF_VIEW_PATH", __DIR__."/../assets/views");
+define("CONF_VIEW_EXT", "php") ;
+
+
 /** MAIL */
 
 define("CONF_MAIL_HOST", $_ENV['MAIL_HOST']);
