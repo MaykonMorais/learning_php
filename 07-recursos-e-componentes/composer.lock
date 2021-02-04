@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "38ec6db2f12c95871fd0095e950c1043",
+    "content-hash": "6f229f80ab0dbe63c3adbe9b5929cbdf",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -280,6 +280,115 @@
                 }
             ],
             "time": "2020-07-20T17:29:33+00:00"
+        },
+        {
+            "name": "siriusphp/upload",
+            "version": "3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/siriusphp/upload.git",
+                "reference": "3a5a1d130c91d505bb6d06f4c9e2428ea5c01214"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/siriusphp/upload/zipball/3a5a1d130c91d505bb6d06f4c9e2428ea5c01214",
+                "reference": "3a5a1d130c91d505bb6d06f4c9e2428ea5c01214",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "siriusphp/validation": "~3.0"
+            },
+            "require-dev": {
+                "laminas/laminas-diactoros": "^2.2",
+                "phpunit/phpunit": "~8.5",
+                "symfony/http-foundation": "^4.4"
+            },
+            "suggest": {
+                "knplabs/gaufrette": "Alternative filesystem abstraction library for upload destinations",
+                "league/flysystem": "To upload to different destinations, not just to the local file system"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sirius\\Upload\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adrian Miu",
+                    "email": "adrian@adrianmiu.ro"
+                }
+            ],
+            "description": "Framework agnostic upload library",
+            "keywords": [
+                "file",
+                "file upload",
+                "form",
+                "psr-7",
+                "security",
+                "upload",
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/siriusphp/upload/issues",
+                "source": "https://github.com/siriusphp/upload/tree/3.0.1"
+            },
+            "time": "2020-03-14T15:02:29+00:00"
+        },
+        {
+            "name": "siriusphp/validation",
+            "version": "3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/siriusphp/validation.git",
+                "reference": "1d03185dfbf34a45d7c415b43605a699cfc3af71"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/siriusphp/validation/zipball/1d03185dfbf34a45d7c415b43605a699cfc3af71",
+                "reference": "1d03185dfbf34a45d7c415b43605a699cfc3af71",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sirius\\Validation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adrian Miu",
+                    "email": "adrian@adrianmiu.ro"
+                }
+            ],
+            "description": "Data validation library. Validate arrays, array objects, domain models etc using a simple API. Easily add your own validators on top of the already dozens built-in validation rules",
+            "keywords": [
+                "form",
+                "modeling",
+                "sanitization",
+                "security",
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/siriusphp/validation/issues",
+                "source": "https://github.com/siriusphp/validation/tree/3.0.2"
+            },
+            "time": "2020-11-24T14:58:51+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -610,7 +719,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.1|^8.0"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
 }
