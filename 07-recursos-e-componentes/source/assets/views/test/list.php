@@ -9,3 +9,5 @@
     <a href="?id=<?= $user->id; ?>" title="Editar">Editar</a>
   </article>
 <?php endforeach;?>
+
+<?= ($pager ?? null); ?>
