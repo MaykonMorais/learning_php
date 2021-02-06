@@ -27,7 +27,7 @@
     "league/plates": "v3.4.0",
     "siriusphp/upload": "^3.0.1",
     "coffeecode/cropper": "^1.0",
-    "coffeecode/optimizer": "2.0.*"
-  
+    "coffeecode/optimizer": "2.0.*",
+    "coffeecode/paginator": "1.0.*"  
   }
 }
