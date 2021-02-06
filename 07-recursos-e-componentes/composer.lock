@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8d9321589a11f3784997861a97ae494b",
+    "content-hash": "f2ac03fcac6ef89632922ef55f2a2cfb",
     "packages": [
         {
             "name": "coffeecode/cropper",
@@ -62,6 +62,59 @@
                 "source": "https://github.com/robsonvleite/cropper/tree/master"
             },
             "time": "2020-06-29T18:33:49+00:00"
+        },
+        {
+            "name": "coffeecode/optimizer",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robsonvleite/optimizer.git",
+                "reference": "6379bc47072e3e5d6354d51c5731ecab860804f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robsonvleite/optimizer/zipball/6379bc47072e3e5d6354d51c5731ecab860804f3",
+                "reference": "6379bc47072e3e5d6354d51c5731ecab860804f3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "php": "^7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CoffeeCode\\Optimizer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robson V. Leite",
+                    "email": "cursos@upinside.com.br",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Optimizer makes it easy to bookmark your site tags, open graph and twitter card",
+            "homepage": "http://www.upinside.com.br",
+            "keywords": [
+                "Coffeecode",
+                "Facebook Tags",
+                "SMO",
+                "meta tags",
+                "open graph",
+                "seo",
+                "twitter card",
+                "upinside"
+            ],
+            "support": {
+                "issues": "https://github.com/robsonvleite/optimizer/issues",
+                "source": "https://github.com/robsonvleite/optimizer/tree/2.0.1"
+            },
+            "time": "2020-06-23T13:19:54+00:00"
         },
         {
             "name": "graham-campbell/result-type",

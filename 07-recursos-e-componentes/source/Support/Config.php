@@ -10,14 +10,26 @@ $envs->load();
 /**
  * DATABASE
  */
-
-
-
 define("CONF_DB_HOST", "127.0.0.1");
 define("CONF_DB_USER", "admin");
 define("CONF_DB_PASS", "1234");
 define("CONF_DB_NAME", "fullstackphp");
 define("CONF_DB_PORT", "3306");
+
+
+/** 
+ * SITE
+ */
+
+define("CONF_SITE_NAME", "UpInside");
+define("CONF_SITE_LANG", "pt_br");
+define("CONF_SITE_DOMAIN", "upinside.com.br");
+
+/**
+ * SOCIAL
+ */
+define("CONF_SOCIAL_TWITTER_CREATOR", "@maykonmorais");
+define("CONF_SOCIAL_TWITTER_PUBLISHER", "@maykonmorais");
 
 
 /**
