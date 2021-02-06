@@ -26,6 +26,6 @@
     "vlucas/phpdotenv": "~5.3.0",
     "league/plates": "v3.4.0",
     "siriusphp/upload": "^3.0.1",
-    "imagine/imagine": "^1.2.4"
+    "coffeecode/cropper": "^1.0"    
   }
 }

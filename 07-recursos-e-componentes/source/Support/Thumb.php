@@ -2,29 +2,57 @@
 
 namespace Source\Support;
 
-use Imagine\Image\Box;
-use Imagine\Imagick\Imagine;
+use CoffeeCode\Cropper\Cropper;
 
 class Thumb {
-  /** @var Imagine */
+  /** @var Cropper */
   private $cropper;
-  private $uploads;
 
+  /** @var string */
+  private $uploads;
+  
+  /**
+   * thumb constructor
+   * @return void
+   */
   public function __construct()
   {
-    $this->cropper = new Imagine();
+    $this->cropper = new Cropper(CONF_IMAGE_CACHE, CONF_IMAGE_QUALITY['jpg'], CONF_IMAGE_QUALITY['png']);
 
-    $this->uploads = CONF_IMAGE_CACHE;
+    $this->uploads = CONF_UPLOAD_DIR;
 
   }
-
-  public function make(string $image, int $width, int $height)
+  
+  /**
+   * make
+   * @param  string $image
+   * @param  int $width
+   * @param  int $height
+   * @return string
+   */
+  public function make(string $image, int $width, int $height = null) : string
   {
-    $img = $this->cropper->open($image);
-    $img->resize(new Box($width, $height));
+    return $this->cropper->make("{$this->uploads}/{$image}", $width, $height);
+  }
+  
+  /**
+   * flush
+   * @param  string $image
+   * @return void
+   */
+  public function flush (string $image = null) : void
+  {
+    if($image) {
+      $this->cropper->flush("{$this->uploads}/{$image}");
+      return;
+    }
 
-    $img->save("{$this->uploads}/{$image}", CONF_CACHE_OPTIONS);
+    $this->cropper->flush($image);
+    return;
+  }
 
-    return $img;
+  public function cropper() : Cropper
+  {
+    return $this->cropper;
   }
 }
