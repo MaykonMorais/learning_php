@@ -1,0 +1,12 @@
+version: '3.0'
+
+services: 
+  db:
+    image: mysql:latest
+    env_file: .env
+    volumes: 
+      - /db:/var/lib/mysql
+    environment: 
+      
+    ports: 
+      - 3306:3306
