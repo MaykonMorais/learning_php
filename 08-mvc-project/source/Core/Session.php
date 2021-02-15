@@ -45,7 +45,7 @@ class Session
    * @param  mixed $name
    * @return bool
    */
-  function has(string $name): bool
+  private function has(string $name): bool
   {
     return isset($_SESSION[$name]);
   }

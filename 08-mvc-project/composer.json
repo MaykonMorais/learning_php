@@ -1,0 +1,33 @@
+{
+  "name": "maykonmorais/mvc-project",
+  "description": "A simple mvc project to learning",
+  "minimum-stability": "stable",
+  "authors": [
+    {
+      "name": "Maykon Morais",
+      "email": "maykons501@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "config": {
+    "vendor-dir": "vendor"
+  },
+  "autoload": {
+    "psr-4": {
+      "Source\\": "source/"
+    },
+    "files": [
+      "source/Support/Config.php",
+      "source/Support/Helpers.php"
+    ]
+  },
+  "require": {
+    "phpmailer/phpmailer": "~6.2",
+    "vlucas/phpdotenv": "~5.3.0",
+    "league/plates": "v3.4.0",
+    "siriusphp/upload": "^3.0.1",
+    "coffeecode/cropper": "^1.0",
+    "coffeecode/optimizer": "2.0.*",
+    "coffeecode/paginator": "1.0.*"
+  }
+}
