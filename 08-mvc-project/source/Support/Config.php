@@ -54,3 +54,10 @@ define("CONF_MAIL_HOST", $_ENV['MAIL_HOST']);
 define("CONF_MAIL_PORT", $_ENV['MAIL_PORT']);
 define("CONF_MAIL_USERNAME", $_ENV['MAIL_USER']);
 define("CONF_MAIL_PASSWD", $_ENV['MAIL_PASS']);
+
+
+/**
+ * VIEW
+ */
+define("CONF_VIEW_PATH", __DIR__ . "../assets/views");
+define("CONF_VIEW_EXT", "php");
