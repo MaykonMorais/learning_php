@@ -8,7 +8,6 @@ class Session
   public function __construct()
   {
     if (!session_id()) {
-      session_save_path(CONF_SES_PATH);
       session_start();
     }
   }

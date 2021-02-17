@@ -1,6 +1,6 @@
 <?php
 
-namespace Source\Core;
+namespace Source\Support;
 
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;

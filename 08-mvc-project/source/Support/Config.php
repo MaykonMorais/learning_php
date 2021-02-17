@@ -5,6 +5,10 @@ use Dotenv\Dotenv;
 $envs = Dotenv::createImmutable(__DIR__ . "/../..");
 $envs->load();
 
+/** URL'S */
+define("CONF_URL_BASE", "http://localhost/fsphp");
+define("CONF_URL_ADMIN", "/admin");
+
 /**
  * DATABASE
  */
@@ -13,6 +17,10 @@ define("CONF_DB_USER", "admin");
 define("CONF_DB_PASS", "1234");
 define("CONF_DB_NAME", "fullstackphp");
 define("CONF_DB_PORT", "3306");
+
+/** DATES */
+define("CONF_DATE_BR", "d/m/Y H:i:s");
+define("CONF_DATE_APP", "Y-m-d H:i:s");
 
 /**
  *  SESSION
